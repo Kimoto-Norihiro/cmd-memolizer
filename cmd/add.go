@@ -4,10 +4,12 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"bytes"
 	"fmt"
+	"log"
+	"os"
+	"path/filepath"
+	"strings"
 
-	"github.com/Kimoto-Norihiro/cmd-memolizer/data"
 	"github.com/spf13/cobra"
 )
 
@@ -17,15 +19,17 @@ var addCmd = &cobra.Command{
 	Short: "A brief description of your command",
 	Long:  `A longer description that spans multiple lines and likely contains examples`,
 	Run: func(cmd *cobra.Command, args []string) {
-		file, err := data.Data.Open("command.txt")
+		path := filepath.Join(".", "data", "commands.txt")
+
+		file, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 		if err != nil {
 			fmt.Println(err)
 		}
 		defer file.Close()
-		buf := new(bytes.Buffer)
-		buf.ReadFrom(file)
 
-		fmt.Print(buf.String())
+		if _, err := file.WriteString(strings.Join(args, "\n") + "\n"); err != nil {
+			log.Fatal(err)
+		}
 	},
 }
 

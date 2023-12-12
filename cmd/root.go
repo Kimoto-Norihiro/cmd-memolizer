@@ -41,7 +41,6 @@ var rootCmd = &cobra.Command{
 		if v, _ := cmd.Flags().GetBool("version"); v {
 			fmt.Println("version " + version)
 		} else {
-			fmt.Println("this flag is not supported.")
 			cmd.Help()
 		}
 	},

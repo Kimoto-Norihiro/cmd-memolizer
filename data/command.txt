@@ -1,6 +1,0 @@
-test command1
-test command2
-test command3
-test command4
-test command5
-test command6
